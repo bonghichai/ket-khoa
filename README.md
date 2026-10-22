@@ -9,10 +9,14 @@ Cách dùng + luật cho AI: `SKILL.md`.
 **Setup script** của môi trường (Claude cloud: «Setup script»; Codex cloud: «Install script», thêm xuống cuối rồi Publish):
 
 ```bash
-git clone --depth 1 https://github.com/bonghichai/ket-khoa.git /opt/ket-khoa && bash /opt/ket-khoa/cai-dat-cloud.sh || echo "ket-khoa: chua tai duoc"
+git clone --depth 1 https://github.com/bonghichai/ket-khoa.git /opt/ket-khoa || { sleep 5; rm -rf /opt/ket-khoa; git clone --depth 1 https://github.com/bonghichai/ket-khoa.git /opt/ket-khoa || true; }; [ -f /opt/ket-khoa/ket.py ] && bash /opt/ket-khoa/cai-dat-cloud.sh || echo "ket-khoa: chua tai duoc"
 ```
 
-Đuôi `|| echo …` giữ cho setup script không lỗi nếu tải hỏng (setup script lỗi = phiên không mở được).
+- Tải hỏng (proxy chập chờn) thì tự thử lại 1 lần.
+- Hỏng cả 2 lần thì chỉ báo, KHÔNG làm setup script lỗi (setup script lỗi = phiên không mở được) — an toàn cả với
+  script có `set -euo pipefail` (Codex).
+- Phiên lỡ không có `/opt/ket-khoa`: AI tự tải vào thư mục tạm rồi dùng
+  `git clone --depth 1 https://github.com/bonghichai/ket-khoa.git /tmp/ket-khoa && python3 /tmp/ket-khoa/ket.py kiem`.
 
 Vé vào két (chỉ đọc) đặt ở:
 - **Claude cloud** — «Thông tin bí mật cho mạng» (Network secrets): tên miền của két, kiểu Bearer.
