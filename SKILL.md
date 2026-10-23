@@ -22,6 +22,11 @@ python3 /opt/ket-khoa/ket.py ghi-file <ngăn>[/thư-mục] <TÊN> /tmp/khoa.json
 Ví dụ: `python3 /opt/ket-khoa/ket.py chay <ngăn> -- bash -c 'curl -s -H "Authorization: Bearer $TEN_KHOA" https://…'`
 Chưa biết khóa nằm ngăn nào → `kiem` rồi `ten <ngăn>`; sổ tay (`AGENTS.md`) của dự án có thể ghi rõ hơn.
 
+**Trong script** (lấy khóa ngay trong chương trình, không in, không ghi file):
+- Python: `sys.path.insert(0, '<thư mục ket-khoa>'); import ket; k = ket.lay('<ngăn>[/thư-mục]', 'TEN_KHOA')`
+- Node (≥ 18): `const { layKhoa } = await import(pathToFileURL('<thư mục ket-khoa>/ket.mjs').href); const k = await layKhoa('<ngăn>', 'TEN_KHOA');`
+- Script CommonJS cần khóa dạng file ngay lập tức: chạy `ket.py ghi-file` ra file tạm, đọc xong xóa ngay.
+
 ## Luật (bắt buộc)
 
 1. **Không in, echo, ghi log, chép vào code / commit / tin nhắn giá trị khóa.** Chỉ dùng `chay` hoặc `ghi-file`; file ghi

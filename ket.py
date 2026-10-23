@@ -143,6 +143,15 @@ def fetch(spec, values=True):
     die(f'két trả lỗi HTTP {code} khi đọc {spec}: {str(b.get("message", ""))[:150]}')
 
 
+def lay(spec, ten):
+    """Cho script Python: trả giá trị 1 khóa (không in). Lỗi → báo và thoát.
+    Dùng: sys.path.insert(0, <thư mục ket-khoa>); import ket; k = ket.lay('ngan[/thu-muc]', 'TEN_KHOA')"""
+    vals = fetch(spec, values=True)
+    if ten not in vals:
+        die(f'không có khóa {ten} trong {spec}')
+    return vals[ten]
+
+
 def cmd_kiem(_args):
     ps = projects()
     print(f'Két: {BASE} — đang chạy: {auth()[1]} — vé đọc được {len(ps)} ngăn')
